@@ -1,0 +1,916 @@
+{
+  "benchmark": {
+    "model": "mistral:latest",
+    "description": "Benchmark of local Mistral query analyzer for financial capability classification and information extraction.",
+    "total_queries": 20
+  },
+  "summary": {
+    "model": "mistral:latest",
+    "total_queries": 20,
+    "capability_correct": 17,
+    "capability_accuracy": 0.85,
+    "risk_correct": 20,
+    "risk_accuracy": 1.0,
+    "initial_amount_correct": 20,
+    "initial_amount_accuracy": 1.0,
+    "target_amount_correct": 20,
+    "target_amount_accuracy": 1.0,
+    "years_correct": 20,
+    "years_accuracy": 1.0,
+    "annual_return_correct": 20,
+    "annual_return_accuracy": 1.0,
+    "symbols_correct": 20,
+    "symbols_accuracy": 1.0,
+    "json_valid": 20,
+    "json_validity": 1.0,
+    "pydantic_valid": 20,
+    "pydantic_validity": 1.0,
+    "average_latency_seconds": 11.4044,
+    "median_latency_seconds": 11.2114,
+    "min_latency_seconds": 9.6988,
+    "max_latency_seconds": 13.3436
+  },
+  "results": [
+    {
+      "id": 1,
+      "query": "Should I invest in TCS?",
+      "expected": {
+        "capabilities": [
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 10.7511,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 2,
+      "query": "What is the risk of investing in INFY?",
+      "expected": {
+        "capabilities": [
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 11.2841,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 3,
+      "query": "I want ₹20 lakh in 8 years with moderate risk.",
+      "expected": {
+        "capabilities": [
+          "financial_planning"
+        ],
+        "risk": "moderate",
+        "initial_amount": null,
+        "target_amount": 2000000,
+        "years": 8,
+        "annual_return": null,
+        "symbols": []
+      },
+      "predicted": {
+        "capabilities": [
+          "financial_planning"
+        ],
+        "risk": "moderate",
+        "initial_amount": null,
+        "target_amount": 2000000.0,
+        "years": 8,
+        "annual_return": null,
+        "symbols": []
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 12.3095,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 4,
+      "query": "Analyze the technical indicators and risk of TCS.",
+      "expected": {
+        "capabilities": [
+          "technical_analysis",
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "technical_analysis",
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 12.4141,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 5,
+      "query": "Analyze the fundamentals of INFY.",
+      "expected": {
+        "capabilities": [
+          "fundamental_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "fundamental_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 10.5949,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 6,
+      "query": "What is investor sentiment for TCS?",
+      "expected": {
+        "capabilities": [
+          "sentiment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "sentiment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 10.4996,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 7,
+      "query": "How should I build a diversified portfolio using TCS and INFY?",
+      "expected": {
+        "capabilities": [
+          "portfolio_management",
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS",
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "portfolio_management"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS",
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": false,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 13.3436,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 8,
+      "query": "What are the current market trends?",
+      "expected": {
+        "capabilities": [
+          "market_research"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": []
+      },
+      "predicted": {
+        "capabilities": [
+          "market_research"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": []
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 9.9971,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 9,
+      "query": "Calculate the technical indicators for TCS.",
+      "expected": {
+        "capabilities": [
+          "technical_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "technical_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 10.5671,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 10,
+      "query": "Evaluate the financial health and profitability of INFY.",
+      "expected": {
+        "capabilities": [
+          "fundamental_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "fundamental_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 10.9639,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 11,
+      "query": "What is the risk level of TCS?",
+      "expected": {
+        "capabilities": [
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 9.8512,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 12,
+      "query": "What is the sentiment around INFY?",
+      "expected": {
+        "capabilities": [
+          "sentiment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "sentiment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 10.0173,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 13,
+      "query": "I want to invest ₹5 lakh for 5 years.",
+      "expected": {
+        "capabilities": [
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": 500000,
+        "target_amount": null,
+        "years": 5,
+        "annual_return": null,
+        "symbols": []
+      },
+      "predicted": {
+        "capabilities": [
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": 500000.0,
+        "target_amount": null,
+        "years": 5,
+        "annual_return": null,
+        "symbols": []
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 12.6946,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 14,
+      "query": "Compare the investment potential of TCS and INFY.",
+      "expected": {
+        "capabilities": [
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS",
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "investment_analysis",
+          "fundamental_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS",
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": false,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 13.2319,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 15,
+      "query": "How risky is investing in TCS?",
+      "expected": {
+        "capabilities": [
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 9.6988,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 16,
+      "query": "Analyze the market and recent price trend of TCS.",
+      "expected": {
+        "capabilities": [
+          "market_research",
+          "technical_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "market_research",
+          "technical_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 11.3382,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 17,
+      "query": "I have ₹10 lakh and want to invest it for 10 years.",
+      "expected": {
+        "capabilities": [
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": 1000000,
+        "target_amount": null,
+        "years": 10,
+        "annual_return": null,
+        "symbols": []
+      },
+      "predicted": {
+        "capabilities": [
+          "financial_planning",
+          "investment_analysis"
+        ],
+        "risk": null,
+        "initial_amount": 1000000.0,
+        "target_amount": null,
+        "years": 10,
+        "annual_return": null,
+        "symbols": []
+      },
+      "evaluation": {
+        "capability_correct": false,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 11.5418,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 18,
+      "query": "I need ₹50 lakh for retirement in 15 years with low risk.",
+      "expected": {
+        "capabilities": [
+          "financial_planning"
+        ],
+        "risk": "low",
+        "initial_amount": null,
+        "target_amount": 5000000,
+        "years": 15,
+        "annual_return": null,
+        "symbols": []
+      },
+      "predicted": {
+        "capabilities": [
+          "financial_planning"
+        ],
+        "risk": "low",
+        "initial_amount": null,
+        "target_amount": 5000000.0,
+        "years": 15,
+        "annual_return": null,
+        "symbols": []
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 11.1388,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 19,
+      "query": "Analyze the investment in TCS considering its fundamentals and risk.",
+      "expected": {
+        "capabilities": [
+          "fundamental_analysis",
+          "investment_analysis",
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "investment_analysis",
+          "risk_analysis",
+          "fundamental_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 12.7899,
+      "status": "success",
+      "error": null
+    },
+    {
+      "id": 20,
+      "query": "Build a portfolio using TCS and INFY considering investment potential and risk.",
+      "expected": {
+        "capabilities": [
+          "portfolio_management",
+          "investment_analysis",
+          "risk_analysis"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS",
+          "INFY"
+        ]
+      },
+      "predicted": {
+        "capabilities": [
+          "investment_analysis",
+          "risk_analysis",
+          "portfolio_management"
+        ],
+        "risk": null,
+        "initial_amount": null,
+        "target_amount": null,
+        "years": null,
+        "annual_return": null,
+        "symbols": [
+          "TCS",
+          "INFY"
+        ]
+      },
+      "evaluation": {
+        "capability_correct": true,
+        "risk_correct": true,
+        "initial_amount_correct": true,
+        "target_amount_correct": true,
+        "years_correct": true,
+        "annual_return_correct": true,
+        "symbols_correct": true,
+        "json_valid": true,
+        "pydantic_valid": true
+      },
+      "latency_seconds": 13.0605,
+      "status": "success",
+      "error": null
+    }
+  ]
+}
