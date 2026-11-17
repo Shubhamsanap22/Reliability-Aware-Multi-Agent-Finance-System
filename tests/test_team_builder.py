@@ -4,7 +4,9 @@ from app.team.team_builder import TeamBuilder
 
 
 def test_build_risk_team():
+
     registry = CapabilityRegistry()
+
     builder = TeamBuilder(registry)
 
     requirement = TaskRequirement(
@@ -15,11 +17,14 @@ def test_build_risk_team():
     team = builder.build_team(requirement)
 
     assert len(team) == 1
+
     assert team[0].name == "Risk Agent"
 
 
 def test_build_portfolio_team():
+
     registry = CapabilityRegistry()
+
     builder = TeamBuilder(registry)
 
     requirement = TaskRequirement(
@@ -32,20 +37,29 @@ def test_build_portfolio_team():
 
     team = builder.build_team(requirement)
 
-    names = {agent.name for agent in team}
+    names = {
+        agent.name
+        for agent in team
+    }
 
     assert "Portfolio Agent" in names
+
     assert "Investment Agent" in names
+
     assert len(team) == 2
 
 
 def test_unknown_capability_is_ignored():
+
     registry = CapabilityRegistry()
+
     builder = TeamBuilder(registry)
 
     requirement = TaskRequirement(
         query="Unknown financial task.",
-        required_capabilities=["unknown_capability"],
+        required_capabilities=[
+            "unknown_capability"
+        ],
     )
 
     team = builder.build_team(requirement)
@@ -54,7 +68,9 @@ def test_unknown_capability_is_ignored():
 
 
 def test_duplicate_agent_is_not_selected_twice():
+
     registry = CapabilityRegistry()
+
     builder = TeamBuilder(registry)
 
     requirement = TaskRequirement(
@@ -67,21 +83,113 @@ def test_duplicate_agent_is_not_selected_twice():
 
     team = builder.build_team(requirement)
 
-    names = [agent.name for agent in team]
+    names = [
+        agent.name
+        for agent in team
+    ]
 
     assert len(names) == len(set(names))
 
 
 def test_build_market_research_team():
+
     registry = CapabilityRegistry()
+
     builder = TeamBuilder(registry)
 
     requirement = TaskRequirement(
         query="Analyze the market trend of TCS.",
-        required_capabilities=["market_research"],
+        required_capabilities=[
+            "market_research"
+        ],
     )
 
     team = builder.build_team(requirement)
 
     assert len(team) == 1
+
     assert team[0].name == "Market Research Agent"
+
+
+def test_investment_capability_can_select_multiple_ranked_agents():
+
+    registry = CapabilityRegistry()
+
+    builder = TeamBuilder(registry)
+
+    requirement = TaskRequirement(
+        query=(
+            "Compare investment opportunities "
+            "and portfolio implications."
+        ),
+        required_capabilities=[
+            "investment_analysis"
+        ],
+    )
+
+    team = builder.build_team(requirement)
+
+    names = {
+        agent.name
+        for agent in team
+    }
+
+    assert names == {
+        "Investment Agent",
+        "Portfolio Agent",
+    }
+
+    assert all(
+        agent.selection_score is not None
+        for agent in team
+    )
+
+    assert all(
+        agent.selection_score_breakdown
+        for agent in team
+    )
+
+
+def test_team_builder_respects_estimated_budget():
+
+    class FakeBudgetManager:
+
+        remaining_budget = 700
+
+    builder = TeamBuilder(
+        registry=CapabilityRegistry(),
+        budget_manager=FakeBudgetManager(),
+    )
+
+    requirement = TaskRequirement(
+        query="Analyze investment options.",
+        required_capabilities=[
+            "investment_analysis"
+        ],
+    )
+
+    team = builder.build_team(requirement)
+
+    assert len(team) == 1
+
+    assert team[0].name == "Portfolio Agent"
+
+
+def test_team_builder_respects_max_team_size():
+
+    builder = TeamBuilder(
+        registry=CapabilityRegistry(),
+        max_team_size=1,
+    )
+
+    requirement = TaskRequirement(
+        query="Analyze investment and portfolio risk.",
+        required_capabilities=[
+            "investment_analysis",
+            "risk_analysis",
+        ],
+    )
+
+    team = builder.build_team(requirement)
+
+    assert len(team) == 1

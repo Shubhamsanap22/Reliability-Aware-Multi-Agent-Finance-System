@@ -1,3 +1,4 @@
+
 from enum import Enum
 from typing import Optional
 
@@ -98,6 +99,12 @@ class AgentState(BaseModel):
 
     output: Optional[str] = None
     failure_reason: Optional[str] = None
+
+    execution_time_seconds: Optional[float] = Field(
+        default=None,
+        ge=0,
+        description="Measured execution duration in seconds.",
+    )
 
     @property
     def remaining_agent_budget(self) -> int:

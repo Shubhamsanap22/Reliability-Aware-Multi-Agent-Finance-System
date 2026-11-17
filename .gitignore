@@ -1,11 +1,31 @@
 # Python-generated files
 __pycache__/
-*.py[oc]
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Build files
 build/
 dist/
 wheels/
-*.egg-info
 
 # Virtual environments
-.venv
+.venv/
+venv/
+
+# Environment variables and secrets
 .env
+.env.*
+
+# Logs
+*.log
+
+# IDE and editor files
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local database and runtime logs
+data/*.db
+logs/

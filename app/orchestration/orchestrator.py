@@ -17,38 +17,81 @@ class Orchestrator:
         executor: Executor,
         reliability_monitor: ReliabilityMonitor,
     ) -> None:
+
         self.analyzer = analyzer
+
         self.team_builder = team_builder
+
         self.executor = executor
+
         self.reliability_monitor = reliability_monitor
 
-    def run(self, query: str) -> List[AgentState]:
+        # Share the executor's budget manager with the team builder.
+        # This allows selection to consider budget availability.
+        if (
+            getattr(
+                self.team_builder,
+                "budget_manager",
+                None,
+            )
+            is None
+        ):
+
+            self.team_builder.budget_manager = (
+                self.executor.budget_manager
+            )
+
+    def run(
+        self,
+        query: str,
+    ) -> List[AgentState]:
         """Run the complete multi-agent workflow."""
-        if not isinstance(query, str) or not query.strip():
-            raise ValueError("Query must be a non-empty string.")
 
-        requirement = self.analyzer.analyze(query.strip())
+        if (
+            not isinstance(query, str)
+            or not query.strip()
+        ):
 
-        team = self.team_builder.build_team(requirement)
+            raise ValueError(
+                "Query must be a non-empty string."
+            )
+
+        # Step 1: Analyze the user's query.
+        requirement = self.analyzer.analyze(
+            query.strip()
+        )
+
+        # Step 2: Build the multi-agent team.
+        team = self.team_builder.build_team(
+            requirement
+        )
 
         if not team:
+
             return []
 
+        # Step 3: Execute selected agents.
         results = self.executor.run_agents_with_fallback(
             agents=team,
             query=requirement.query,
             requirement=requirement,
         )
 
+        # Step 4: Map executed agents by name.
         agents_by_name = {
             agent.name: agent
             for agent in team
         }
 
+        # Step 5: Update reliability monitoring.
         for result in results:
-            agent = agents_by_name.get(result.agent_name)
+
+            agent = agents_by_name.get(
+                result.agent_name
+            )
 
             if agent is not None:
+
                 self.reliability_monitor.update(
                     agent,
                     result.status,

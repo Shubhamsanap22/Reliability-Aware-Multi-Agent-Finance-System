@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070b16">
+    <title>FinMAS | Financial Multi-Agent System</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0"></script>
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-mark">F<span>✳</span></div>
+            <div>
+                <div class="brand-name">FinMAS</div>
+                <div class="brand-subtitle">MULTI-AGENT INTELLIGENCE</div>
+            </div>
+            <button class="icon-button sidebar-close" id="sidebarClose" aria-label="Close menu">×</button>
+        </div>
+
+        <div class="workspace-label">WORKSPACE</div>
+
+        <nav class="navigation" aria-label="Main navigation">
+            <button class="nav-item active" data-page="overview">
+                <i data-lucide="layout-dashboard"></i><span>Overview</span>
+            </button>
+            <button class="nav-item" data-page="query">
+                <i data-lucide="message-square-text"></i><span>Query & Results</span>
+                <span class="nav-dot"></span>
+            </button>
+            <button class="nav-item" data-page="agents">
+                <i data-lucide="bot"></i><span>Agent Performance</span>
+            </button>
+            <button class="nav-item" data-page="workflow">
+                <i data-lucide="workflow"></i><span>Workflow Monitor</span>
+            </button>
+            <button class="nav-item" data-page="recovery">
+                <i data-lucide="shield-alert"></i><span>Failure & Recovery</span>
+            </button>
+            <button class="nav-item" data-page="history">
+                <i data-lucide="history"></i><span>History & Evaluation</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="connection-card">
+                <div class="connection-heading">
+                    <span class="status-dot" id="connectionDot"></span>
+                    <span id="connectionLabel">Checking backend</span>
+                </div>
+                <div class="connection-caption" id="connectionCaption">
+                    Connecting to API...
+                </div>
+                <button class="text-button" id="retryConnection">Check connection ↗</button>
+            </div>
+
+            <button class="nav-item" data-page="settings">
+                <i data-lucide="settings-2"></i><span>Settings</span>
+            </button>
+
+            <div class="user-profile">
+                <div class="avatar">AI</div>
+                <div class="user-copy">
+                    <strong>Financial Intelligence</strong>
+                    <span>Local workspace</span>
+                </div>
+                <span class="profile-menu">•••</span>
+            </div>
+        </div>
+    </aside>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="icon-button mobile-menu" id="mobileMenu" aria-label="Open menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="breadcrumb">
+                    Workspace <span>/</span>
+                    <strong id="breadcrumbPage">Overview</strong>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="api-pill">
+                    <span class="status-dot" id="topStatusDot"></span>
+                    <span id="topStatusText">API checking</span>
+                </div>
+                <button class="icon-button" id="refreshButton" title="Refresh data" aria-label="Refresh data">
+                    <i data-lucide="refresh-cw"></i>
+                </button>
+                <div class="top-avatar">FM</div>
+            </div>
+        </header>
+
+        <div class="page-container">
+
+            <!-- OVERVIEW -->
+            <section class="page active" id="page-overview">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">FINANCIAL INTELLIGENCE PLATFORM</div>
+                        <h1>System Overview<span class="heading-period">.</span></h1>
+                        <p class="page-description">Monitor your financial multi-agent system and review execution activity.</p>
+                    </div>
+                    <button class="button button-primary" data-goto="query">
+                        <i data-lucide="plus"></i> New analysis
+                    </button>
+                </div>
+
+                <div class="notice hidden" id="overviewNotice"></div>
+
+                <div class="metric-grid">
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Total executions</span><i data-lucide="activity"></i></div>
+                        <div class="metric-value" id="metricExecutions">—</div>
+                        <div class="metric-foot">Recorded in this session</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Completed agents</span><i data-lucide="check-circle-2"></i></div>
+                        <div class="metric-value" id="metricCompleted">—</div>
+                        <div class="metric-foot">Across recorded executions</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Failed agents</span><i data-lucide="alert-circle"></i></div>
+                        <div class="metric-value" id="metricFailed">—</div>
+                        <div class="metric-foot">Across recorded executions</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Latest budget used</span><i data-lucide="gauge"></i></div>
+                        <div class="metric-value" id="metricBudget">—</div>
+                        <div class="metric-foot" id="metricBudgetFoot">Run an analysis to view usage</div>
+                    </article>
+                </div>
+
+                <div class="content-grid overview-grid">
+                    <article class="panel">
+                        <div class="panel-heading">
+                            <div><h2>Recent executions</h2><p>Latest financial queries processed by the system</p></div>
+                            <button class="text-button" data-goto="history">View history →</button>
+                        </div>
+                        <div id="recentExecutions">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i data-lucide="layers-3"></i></div>
+                                <h3>No executions yet</h3>
+                                <p>Run a financial query to populate this dashboard with actual results.</p>
+                                <button class="button button-secondary" data-goto="query">Start an analysis</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-heading">
+                            <div><h2>Latest execution</h2><p>Current run summary</p></div>
+                            <span class="tag tag-neutral" id="latestStatus">NO RUN</span>
+                        </div>
+                        <div id="latestSummary">
+                            <div class="empty-state compact-empty">
+                                <div class="empty-icon"><i data-lucide="chart-no-axes-combined"></i></div>
+                                <h3>Waiting for results</h3>
+                                <p>Your latest agent execution summary will appear here.</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Agent activity</h2><p>Agent status from the most recent execution</p></div>
+                        <button class="text-button" data-goto="agents">Agent details →</button>
+                    </div>
+                    <div id="overviewAgents">
+                        <div class="empty-state compact-empty"><p>No agent activity available yet.</p></div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- QUERY -->
+            <section class="page" id="page-query">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">ANALYSIS WORKSPACE</div>
+                        <h1>Query & Results<span class="heading-period">.</span></h1>
+                        <p class="page-description">Submit a financial question and inspect the actual outputs returned by your agents.</p>
+                    </div>
+                </div>
+
+                <div class="query-layout">
+                    <div class="query-main">
+                        <article class="panel query-panel">
+                            <div class="panel-heading">
+                                <div><h2>Financial query</h2><p>Describe the financial analysis you want to perform.</p></div>
+                                <span class="tag tag-blue">INPUT</span>
+                            </div>
+
+                            <textarea id="queryInput" maxlength="5000" placeholder="Example: Analyze the risk of TCS using the available historical market data..."></textarea>
+
+                            <div class="query-footer">
+                                <span id="characterCount">0 / 5000 characters</span>
+                                <button class="button button-primary" id="runQueryButton">
+                                    <i data-lucide="play"></i> Run analysis
+                                </button>
+                            </div>
+
+                            <div id="queryError" class="inline-error hidden"></div>
+
+                            <div class="example-queries">
+                                <span>Try an example:</span>
+                                <button class="example-chip" data-query="Analyze the risk of TCS.">Risk analysis</button>
+                                <button class="example-chip" data-query="Should I invest in TCS?">Investment analysis</button>
+                                <button class="example-chip" data-query="Build a portfolio using TCS and INFY.">Portfolio</button>
+                            </div>
+                        </article>
+
+                        <article class="panel section-gap">
+                            <div class="panel-heading">
+                                <div><h2>Consolidated financial report</h2><p>One plain-language result with charts when supported by data</p></div>
+                                <span class="tag tag-neutral" id="findingCount">0 FINDINGS</span>
+                            </div>
+                            <div id="queryFindings">
+                                <div class="empty-state">
+                                    <div class="empty-icon"><i data-lucide="file-search"></i></div>
+                                    <h3>Results will appear here</h3>
+                                    <p>Submit a query to see a consolidated report and data-supported charts.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="query-side">
+                        <article class="panel">
+                            <div class="panel-heading">
+                                <div><h2>Query understanding</h2><p>Extracted requirements</p></div>
+                            </div>
+                            <div id="queryUnderstanding">
+                                <div class="empty-state compact-empty"><p>Requirements will appear after analysis.</p></div>
+                            </div>
+                        </article>
+
+                        <article class="panel section-gap">
+                            <div class="panel-heading">
+                                <div><h2>Execution summary</h2><p>Current run</p></div>
+                            </div>
+                            <div id="querySummary">
+                                <div class="empty-state compact-empty"><p>No execution summary yet.</p></div>
+                            </div>
+                        </article>
+
+                        <article class="panel section-gap">
+                            <div class="panel-heading">
+                                <div><h2>Budget usage</h2><p>Latest execution</p></div>
+                            </div>
+                            <div id="queryBudget">
+                                <div class="empty-state compact-empty"><p>Budget data will appear after execution.</p></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AGENTS -->
+            <section class="page" id="page-agents">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">MULTI-AGENT INTELLIGENCE</div>
+                        <h1>Agent Performance<span class="heading-period">.</span></h1>
+                        <p class="page-description">Inspect reliability, status, resource usage, and outputs for each agent.</p>
+                    </div>
+                </div>
+
+                <div class="metric-grid three-metrics">
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Agents in latest run</span><i data-lucide="bot"></i></div>
+                        <div class="metric-value" id="agentTotal">—</div>
+                        <div class="metric-foot">Selected for the latest query</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Completed</span><i data-lucide="check-circle-2"></i></div>
+                        <div class="metric-value" id="agentCompleted">—</div>
+                        <div class="metric-foot">Successful agent executions</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Failed</span><i data-lucide="shield-alert"></i></div>
+                        <div class="metric-value" id="agentFailed">—</div>
+                        <div class="metric-foot">Failed agent executions</div>
+                    </article>
+                </div>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Agent registry for latest execution</h2><p>Metrics are taken from returned AgentState objects.</p></div>
+                        <button class="button button-secondary" id="exportAgents">Export CSV</button>
+                    </div>
+                    <div id="agentTable" class="table-wrap">
+                        <div class="empty-state"><p>Run a query to see agent performance.</p></div>
+                    </div>
+                </article>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Agent output inspector</h2><p>Select an agent row to inspect its returned output.</p></div>
+                    </div>
+                    <div id="agentInspector">
+                        <div class="empty-state compact-empty"><p>No agent selected.</p></div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- WORKFLOW -->
+            <section class="page" id="page-workflow">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">EXECUTION OBSERVABILITY</div>
+                        <h1>Workflow Monitor<span class="heading-period">.</span></h1>
+                        <p class="page-description">Review the workflow stages and final agent states for the latest execution.</p>
+                    </div>
+                    <button class="button button-secondary" id="refreshWorkflow">
+                        <i data-lucide="refresh-cw"></i> Refresh
+                    </button>
+                </div>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div><h2>Execution pipeline</h2><p>Stages in the application workflow</p></div>
+                    </div>
+                    <div id="workflowStages">
+                        <div class="empty-state"><p>Run a query to inspect workflow results.</p></div>
+                    </div>
+                </article>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Agent execution states</h2><p>Final statuses returned by the executor</p></div>
+                    </div>
+                    <div id="workflowAgents">
+                        <div class="empty-state compact-empty"><p>No workflow execution available.</p></div>
+                    </div>
+                </article>
+
+                <div class="notice notice-info section-gap">
+                    <strong>Live monitoring note</strong>
+                    <p>This view displays real execution results. Live token streaming and per-step timing require additional instrumentation in the Python backend.</p>
+                </div>
+            </section>
+
+            <!-- RECOVERY -->
+            <section class="page" id="page-recovery">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">RELIABILITY OPERATIONS</div>
+                        <h1>Failure & Recovery<span class="heading-period">.</span></h1>
+                        <p class="page-description">Review failed agents, failure reasons, and recovery outcomes reported by the backend.</p>
+                    </div>
+                </div>
+
+                <div class="metric-grid three-metrics">
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Failed</span><i data-lucide="circle-x"></i></div>
+                        <div class="metric-value" id="failureCount">—</div>
+                        <div class="metric-foot">Latest execution</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Replaced</span><i data-lucide="replace"></i></div>
+                        <div class="metric-value" id="replacedCount">—</div>
+                        <div class="metric-foot">Reported replacement statuses</div>
+                    </article>
+                    <article class="metric-card">
+                        <div class="metric-top"><span>Incomplete</span><i data-lucide="clock-3"></i></div>
+                        <div class="metric-value" id="incompleteCount">—</div>
+                        <div class="metric-foot">Non-final agent states</div>
+                    </article>
+                </div>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Failure log</h2><p>Actual failure reasons returned by the executor</p></div>
+                    </div>
+                    <div id="failureList">
+                        <div class="empty-state"><p>No failure records available.</p></div>
+                    </div>
+                </article>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Recovery outcomes</h2><p>Only outcomes explicitly reported by the backend</p></div>
+                    </div>
+                    <div id="recoveryList">
+                        <div class="empty-state"><p>No recovery outcomes available.</p></div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- HISTORY -->
+            <section class="page" id="page-history">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">AUDIT & EVALUATION</div>
+                        <h1>History & Evaluation<span class="heading-period">.</span></h1>
+                        <p class="page-description">Review the query history recorded by this browser session.</p>
+                    </div>
+                    <button class="button button-secondary" id="exportHistory">Export CSV</button>
+                </div>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div><h2>Execution history</h2><p>Queries processed during this browser session</p></div>
+                        <span class="tag tag-neutral" id="historyCount">0 RUNS</span>
+                    </div>
+                    <div id="historyTable" class="table-wrap">
+                        <div class="empty-state"><p>No executions recorded yet.</p></div>
+                    </div>
+                </article>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Evaluation notes</h2><p>Current measurement coverage</p></div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-tile"><strong>Agent status</strong><span>Available from execution results</span></div>
+                        <div class="info-tile"><strong>Budget usage</strong><span>Available from BudgetManager</span></div>
+                        <div class="info-tile"><strong>Persistent storage</strong><span>Not enabled by this frontend alone</span></div>
+                        <div class="info-tile"><strong>Benchmark metrics</strong><span>Require a defined evaluation dataset</span></div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- SETTINGS -->
+            <section class="page" id="page-settings">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">SYSTEM CONFIGURATION</div>
+                        <h1>Settings<span class="heading-period">.</span></h1>
+                        <p class="page-description">Review API connectivity, local data sources, and configuration.</p>
+                    </div>
+                </div>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div><h2>Backend connection</h2><p>FastAPI service health</p></div>
+                    </div>
+                    <div class="settings-row">
+                        <div><strong>API endpoint</strong><span id="apiEndpointLabel">/api</span></div>
+                        <span class="tag tag-neutral" id="settingsApiStatus">CHECKING</span>
+                    </div>
+                    <div class="settings-row">
+                        <div><strong>Connection</strong><span id="settingsConnectionText">Checking API health...</span></div>
+                        <button class="button button-secondary" id="settingsRetry">Test connection</button>
+                    </div>
+                </article>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Budget configuration</h2><p>Values from the latest backend execution</p></div>
+                    </div>
+                    <div id="settingsBudget" class="settings-grid">
+                        <div class="empty-state compact-empty"><p>Run a query to load budget state.</p></div>
+                    </div>
+                    <div class="notice notice-info">
+                        <strong>Configuration is read-only here.</strong>
+                        <p>Change the actual budget in the Python application configuration. Editing frontend text alone does not change backend behavior.</p>
+                    </div>
+                </article>
+
+                <article class="panel section-gap">
+                    <div class="panel-heading">
+                        <div><h2>Data source</h2><p>Market data available to the application</p></div>
+                    </div>
+                    <div id="settingsDataSource">
+                        <div class="empty-state compact-empty"><p>Data-source status must be exposed by the backend.</p></div>
+                    </div>
+                </article>
+            </section>
+
+            <footer class="app-footer">
+                <span>FinMAS <span class="footer-separator">·</span> Financial Multi-Agent System</span>
+                <span>Decision support, not guaranteed financial advice.</span>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
